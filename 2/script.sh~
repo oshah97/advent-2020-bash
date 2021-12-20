@@ -1,0 +1,51 @@
+#!/bin/bash
+
+badpass=0
+PWDS=()
+pass=
+letter=
+temp=
+range=
+
+#PART 1
+
+IFS=$'\r\n' GLOBIGNORE='*' command eval  'PWDS=($(cat ./input))'
+
+
+
+echo "${PWDS[1]}"
+test="${PWDS[1]}"
+ch="r"
+count=0
+for char in "${test[@]}"; do
+    echo $char
+    count+=
+    echo $count
+done
+
+exit 1
+
+
+for password in "${PWDS[@]}"; do
+
+    pass="${password#*:}"
+    temp="${password%%:*}"
+    letter="${temp#* }"
+    range="${temp%% *}"
+
+
+    beg="${range%%-*}"
+    end="${range#*-}"
+   
+    num=($(echo $pass | awk -F"${letter}" '{print NF-1}'))
+
+    if [ ! $num -gt $end ] && [ ! $beg -gt $num ]; then
+	badpass=$(($badpass+1))
+    fi
+    
+done
+
+echo "Good Passwords: "$badpass
+echo
+
+
